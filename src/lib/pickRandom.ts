@@ -6,6 +6,8 @@ const pickRandom = <T>(arr: T[], count = 3) => {
     if (picked.includes(item)) continue;
     else picked.push(item);
   }
+
+  return picked;
 };
 
 export default pickRandom;

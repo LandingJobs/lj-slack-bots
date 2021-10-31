@@ -10,5 +10,6 @@ var pickRandom = function (arr, count) {
         else
             picked.push(item);
     }
+    return picked;
 };
 exports.default = pickRandom;
