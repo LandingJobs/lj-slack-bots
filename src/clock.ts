@@ -1,25 +1,14 @@
 import { schedule } from "node-cron";
 import Queue from "bull";
 
-import {
-  cronTimer as weekndCronTime,
-  jobId as weekndJobId,
-} from "./bots/weeknd";
-import {
-  cronTimer as randomConvoCronTime,
-  jobId as randomConvoJobId,
-} from "./bots/randomConvo";
+import bots from "./bots";
 
 const REDIS_URL = process.env.REDIS_URL || "redis://127.0.0.1:6379";
 
 const workQueue = new Queue("bots", REDIS_URL);
 
-// schedule weeknd bot
-schedule(weekndCronTime, async () => {
-  await workQueue.add({ bot: weekndJobId });
-});
-
-// schedule randomConvo bot
-schedule(randomConvoCronTime, async () => {
-  await workQueue.add({ bot: randomConvoJobId });
+bots.forEach(({ cronTimer, jobId }) => {
+  schedule(cronTimer, async () => {
+    await workQueue.add({ bot: jobId });
+  });
 });
