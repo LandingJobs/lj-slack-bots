@@ -79,6 +79,7 @@ var sendMessage = function (user) { return __awaiter(void 0, void 0, void 0, fun
                                 },
                             },
                         ],
+                        text: "🎉🎉🎉 *You are the lucky winner!!* 🎉🎉🎉 You've been chosen to share _\"voluntarily\"_ some pictures of your super fun weekend.\nIf you're weekend wasn't fun, get some stock pictures from Google. Share them right now!! (on the #random channel).",
                         channel: user.id,
                     })];
             case 1:
