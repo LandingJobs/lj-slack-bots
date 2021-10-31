@@ -71,10 +71,7 @@ var pickRandomPeople = function () { return __awaiter(void 0, void 0, void 0, fu
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, client.conversations.list({
-                        types: "im",
-                        exclude_archived: true,
-                    })];
+                return [4 /*yield*/, client.users.list()];
             case 1:
                 result = _a.sent();
                 console.log(result);

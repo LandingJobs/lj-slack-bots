@@ -24,10 +24,7 @@ const publishMessage = async (id: string, text: string) => {
 const pickRandomPeople = async () => {
   try {
     // Call the conversations.list method using the built-in WebClient
-    const result = await client.conversations.list({
-      types: "im",
-      exclude_archived: true,
-    });
+    const result = await client.users.list();
 
     console.log(result);
   } catch (error) {
