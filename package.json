@@ -1,0 +1,10 @@
+{
+  "name": "weeknd-slack-bot",
+  "version": "0.1.0",
+  "description": "A bot that yells at you so you share your weeknd",
+  "main": "src/bot.js",
+  "repository": "https://github.com/LandingJobs/weeknd-slack-bot.git",
+  "author": "Filipe Medeiros <filipesilvamedeiros@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
