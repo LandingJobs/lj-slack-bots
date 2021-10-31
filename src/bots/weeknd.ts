@@ -1,10 +1,14 @@
+import { WebClient } from "@slack/web-api";
+
+// WebClient insantiates a client that can call API methods
+// When using Bolt, you can use either `app.client` or the `client` passed to listeners.
+const client = new WebClient(process.env.SLACK_API_TOKEN);
+
 // Post a message to a channel your app is in using ID and message text
-const publishMessage = async (id, text) => {
+const publishMessage = async (id: string, text: string) => {
   try {
     // Call the chat.postMessage method using the built-in WebClient
-    const result = await app.client.chat.postMessage({
-      // The token you used to initialize your app
-      token: "xoxb-your-token",
+    const result = await client.chat.postMessage({
       channel: id,
       text: text,
       // You could also use a blocks[] array to send richer content
@@ -20,9 +24,7 @@ const publishMessage = async (id, text) => {
 const pickRandomPeople = async () => {
   try {
     // Call the conversations.list method using the built-in WebClient
-    const result = await app.client.conversations.list({
-      // The token you used to initialize your app
-      token: "xoxb-your-token",
+    const result = await client.conversations.list({
       types: "im",
       exclude_archived: true,
     });
@@ -36,3 +38,5 @@ const pickRandomPeople = async () => {
 const main = async () => {
   await pickRandomPeople();
 };
+
+export default main;

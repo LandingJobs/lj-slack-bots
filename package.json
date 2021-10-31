@@ -2,9 +2,27 @@
   "name": "weeknd-slack-bot",
   "version": "0.1.0",
   "description": "A bot that yells at you so you share your weeknd",
-  "main": "src/bot.js",
+  "main": "src/bots.js",
   "repository": "https://github.com/LandingJobs/weeknd-slack-bot.git",
   "author": "Filipe Medeiros <filipesilvamedeiros@gmail.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "scripts": {
+    "build": "rimraf ./build && tsc"
+  },
+  "dependencies": {
+    "@slack/web-api": "^6.4.0",
+    "bull": "^4.1.0",
+    "node-cron": "^3.0.0",
+    "throng": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/bull": "^3.15.5",
+    "@types/node": "^16.11.6",
+    "@types/node-cron": "^3.0.0",
+    "@types/throng": "^5.0.3",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.4.4"
+  }
 }
