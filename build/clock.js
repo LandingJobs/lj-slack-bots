@@ -46,7 +46,7 @@ var REDIS_URL = process.env.REDIS_URL || "redis://127.0.0.1:6379";
 // Create / Connect to a named work queue
 var workQueue = new bull_1.default("bots", REDIS_URL);
 // Kick off a new job by adding it to the work queue
-(0, node_cron_1.schedule)("* * * * * 4", function () { return __awaiter(void 0, void 0, void 0, function () {
+(0, node_cron_1.schedule)("0 * * * * *", function () { return __awaiter(void 0, void 0, void 0, function () {
     var job;
     return __generator(this, function (_a) {
         switch (_a.label) {
