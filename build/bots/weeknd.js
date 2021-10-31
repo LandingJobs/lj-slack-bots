@@ -45,24 +45,47 @@ var pickRandom_1 = __importDefault(require("../lib/pickRandom"));
 // When using Bolt, you can use either `app.client` or the `client` passed to listeners.
 var client = new web_api_1.WebClient(process.env.SLACK_API_TOKEN);
 // Post a message to a channel your app is in using ID and message text
-var publishMessage = function (id, text) { return __awaiter(void 0, void 0, void 0, function () {
-    var result, error_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+var sendMessage = function (user) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, ok, error, error_1;
+    var _b, _c;
+    return __generator(this, function (_d) {
+        switch (_d.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
+                _d.trys.push([0, 2, , 3]);
                 return [4 /*yield*/, client.chat.postMessage({
-                        channel: id,
-                        text: text,
-                        // You could also use a blocks[] array to send richer content
+                        blocks: [
+                            {
+                                type: "section",
+                                text: {
+                                    type: "mrkdwn",
+                                    text: "🎉🎉🎉 *You are the lucky winner!!* 🎉🎉🎉",
+                                },
+                            },
+                            {
+                                type: "section",
+                                text: {
+                                    type: "mrkdwn",
+                                    text: "You've been chosen to share _\"voluntarily\"_ some pictures of your super fun weekend.\nIf you're weekend wasn't fun, get some stock pictures from Google",
+                                },
+                            },
+                            {
+                                type: "section",
+                                text: {
+                                    type: "mrkdwn",
+                                    text: "Share them right now!! (on the #random channel)",
+                                },
+                            },
+                        ],
+                        channel: user.id,
                     })];
             case 1:
-                result = _a.sent();
-                // Print result, which includes information about the message (like TS)
-                console.log(result);
+                _a = _d.sent(), ok = _a.ok, error = _a.error;
+                if (!ok)
+                    throw error;
+                console.log("\uD83E\uDD16 - i'm done yelling at " + ((_c = (_b = user.real_name) !== null && _b !== void 0 ? _b : user.name) !== null && _c !== void 0 ? _c : "someone(?)"));
                 return [3 /*break*/, 3];
             case 2:
-                error_1 = _a.sent();
+                error_1 = _d.sent();
                 console.error(error_1);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
@@ -70,7 +93,7 @@ var publishMessage = function (id, text) { return __awaiter(void 0, void 0, void
     });
 }); };
 var pickRandomPeople = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, ok, members, error, threeRandomUsers, error_2;
+    var _a, ok, members, error, error_2;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -80,9 +103,10 @@ var pickRandomPeople = function () { return __awaiter(void 0, void 0, void 0, fu
                 _a = _b.sent(), ok = _a.ok, members = _a.members, error = _a.error;
                 if (!ok)
                     throw error;
-                threeRandomUsers = (0, pickRandom_1.default)(members, 3);
-                console.log(threeRandomUsers);
-                return [3 /*break*/, 3];
+                return [2 /*return*/, (0, pickRandom_1.default)(members.filter(function (_a) {
+                        var deleted = _a.deleted;
+                        return !deleted;
+                    }), 3)];
             case 2:
                 error_2 = _b.sent();
                 console.error(error_2);
@@ -91,12 +115,41 @@ var pickRandomPeople = function () { return __awaiter(void 0, void 0, void 0, fu
         }
     });
 }); };
+var pickUser = function (userId) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, ok, error, user, error_3;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _b.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, client.users.info({ user: userId })];
+            case 1:
+                _a = _b.sent(), ok = _a.ok, error = _a.error, user = _a.user;
+                if (!ok)
+                    throw error;
+                return [2 /*return*/, user];
+            case 2:
+                error_3 = _b.sent();
+                console.error(error_3);
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
 var main = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var selectedPeople;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, pickRandomPeople()];
+            case 0: return [4 /*yield*/, pickUser("U02DFN1AW3T")];
             case 1:
-                _a.sent();
+                selectedPeople = [_a.sent()];
+                if (selectedPeople === undefined)
+                    console.log("🤖 - i wasn't able to yell at people!");
+                else {
+                    selectedPeople
+                        .filter(function (user) { return user !== undefined; })
+                        .forEach(function (user) { return sendMessage(user); });
+                    console.log("🤖 - i'm done yelling at people!");
+                }
                 return [2 /*return*/];
         }
     });
