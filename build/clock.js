@@ -41,19 +41,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var node_cron_1 = require("node-cron");
 var bull_1 = __importDefault(require("bull"));
-// Connect to a local redis intance locally, and the Heroku-provided URL in production
+var weeknd_1 = require("./bots/weeknd");
 var REDIS_URL = process.env.REDIS_URL || "redis://127.0.0.1:6379";
-// Create / Connect to a named work queue
 var workQueue = new bull_1.default("bots", REDIS_URL);
-// Kick off a new job by adding it to the work queue
-(0, node_cron_1.schedule)("0 * * * * *", function () { return __awaiter(void 0, void 0, void 0, function () {
-    var job;
+// schedule weeknd bot
+(0, node_cron_1.schedule)(weeknd_1.cronTimer, function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, workQueue.add({ bot: "weeknd" })];
+            case 0: return [4 /*yield*/, workQueue.add({ bot: weeknd_1.jobId })];
             case 1:
-                job = _a.sent();
-                console.log(job);
+                _a.sent();
                 return [2 /*return*/];
         }
     });

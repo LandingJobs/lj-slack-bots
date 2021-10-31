@@ -4,6 +4,9 @@ import { User } from "@slack/web-api/dist/response/UsersInfoResponse";
 
 import pickRandom from "../lib/pickRandom";
 
+export const cronTimer = "0 11 * * 1"; // every monday at 11am
+export const jobId = "weeknd";
+
 // WebClient insantiates a client that can call API methods
 // When using Bolt, you can use either `app.client` or the `client` passed to listeners.
 const client = new WebClient(process.env.SLACK_API_TOKEN);
@@ -76,8 +79,9 @@ const pickUser = async (userId: string) => {
 };
 
 const main = async () => {
-  //   const selectedPeople = await pickRandomPeople();
-  const selectedPeople = [await pickUser("U02DFN1AW3T")];
+  const selectedPeople = await pickRandomPeople();
+  // for testing
+  // const selectedPeople = [await pickUser("U02DFN1AW3T")];
 
   if (selectedPeople === undefined)
     console.log("🤖 - i wasn't able to yell at people!");

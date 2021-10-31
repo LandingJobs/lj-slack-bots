@@ -39,8 +39,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.jobId = exports.cronTimer = void 0;
 var web_api_1 = require("@slack/web-api");
 var pickRandom_1 = __importDefault(require("../lib/pickRandom"));
+exports.cronTimer = "0 11 * * 1"; // every monday at 11am
+exports.jobId = "weeknd";
 // WebClient insantiates a client that can call API methods
 // When using Bolt, you can use either `app.client` or the `client` passed to listeners.
 var client = new web_api_1.WebClient(process.env.SLACK_API_TOKEN);
@@ -139,9 +142,11 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
     var selectedPeople;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, pickUser("U02DFN1AW3T")];
+            case 0: return [4 /*yield*/, pickRandomPeople()];
             case 1:
-                selectedPeople = [_a.sent()];
+                selectedPeople = _a.sent();
+                // for testing
+                // const selectedPeople = [await pickUser("U02DFN1AW3T")];
                 if (selectedPeople === undefined)
                     console.log("🤖 - i wasn't able to yell at people!");
                 else {
