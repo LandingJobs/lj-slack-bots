@@ -42,6 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var node_cron_1 = require("node-cron");
 var bull_1 = __importDefault(require("bull"));
 var weeknd_1 = require("./bots/weeknd");
+var randomConvo_1 = require("./bots/randomConvo");
 var REDIS_URL = process.env.REDIS_URL || "redis://127.0.0.1:6379";
 var workQueue = new bull_1.default("bots", REDIS_URL);
 // schedule weeknd bot
@@ -49,6 +50,17 @@ var workQueue = new bull_1.default("bots", REDIS_URL);
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, workQueue.add({ bot: weeknd_1.jobId })];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); });
+// schedule randomConvo bot
+(0, node_cron_1.schedule)(randomConvo_1.cronTimer, function () { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, workQueue.add({ bot: randomConvo_1.jobId })];
             case 1:
                 _a.sent();
                 return [2 /*return*/];

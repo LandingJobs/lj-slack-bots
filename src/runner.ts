@@ -2,6 +2,7 @@ import throng from "throng";
 import Queue, { ProcessCallbackFunction } from "bull";
 
 import weeknd, { jobId as weekndJobId } from "./bots/weeknd";
+import randomConvo, { jobId as randomConvoJobId } from "./bots/randomConvo";
 
 // Connect to a local redis instance locally, and the Heroku-provided URL in production
 const REDIS_URL = process.env.REDIS_URL || "redis://127.0.0.1:6379";
@@ -12,6 +13,7 @@ function start() {
 
   const process: ProcessCallbackFunction<{ bot: string }> = (job) => {
     if (job.data.bot === weekndJobId) weeknd();
+    else if (job.data.bot === randomConvoJobId) randomConvo();
   };
   workQueue.process(50, process);
 }

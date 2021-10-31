@@ -25,6 +25,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var throng_1 = __importDefault(require("throng"));
 var bull_1 = __importDefault(require("bull"));
 var weeknd_1 = __importStar(require("./bots/weeknd"));
+var randomConvo_1 = __importStar(require("./bots/randomConvo"));
 // Connect to a local redis instance locally, and the Heroku-provided URL in production
 var REDIS_URL = process.env.REDIS_URL || "redis://127.0.0.1:6379";
 function start() {
@@ -33,6 +34,8 @@ function start() {
     var process = function (job) {
         if (job.data.bot === weeknd_1.jobId)
             (0, weeknd_1.default)();
+        else if (job.data.bot === randomConvo_1.jobId)
+            (0, randomConvo_1.default)();
     };
     workQueue.process(50, process);
 }

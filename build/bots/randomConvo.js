@@ -42,72 +42,80 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.jobId = exports.cronTimer = void 0;
 var web_api_1 = require("@slack/web-api");
 var pickRandom_1 = __importDefault(require("../lib/pickRandom"));
-exports.cronTimer = "0 11 * * 1"; // every monday at 11am
-exports.jobId = "weeknd";
+exports.cronTimer = "0 12 * * 1"; // every monday at 11am
+exports.jobId = "randomConvo";
 var client = new web_api_1.WebClient(process.env.SLACK_API_TOKEN);
-var sendMessage = function (user) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, ok, error, error_1;
-    var _b, _c;
-    return __generator(this, function (_d) {
-        switch (_d.label) {
+var sendGroupMessage = function (users) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, ok, channel, error, error_1;
+    var _b;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
             case 0:
-                _d.trys.push([0, 2, , 3]);
+                _c.trys.push([0, 3, , 4]);
+                return [4 /*yield*/, client.conversations.open({
+                        users: users.join(", "),
+                    })];
+            case 1:
+                _a = _c.sent(), ok = _a.ok, channel = _a.channel, error = _a.error;
+                if (!ok)
+                    throw error;
                 return [4 /*yield*/, client.chat.postMessage({
                         blocks: [
                             {
                                 type: "section",
                                 text: {
                                     type: "mrkdwn",
-                                    text: "🎉🎉🎉 *You are the lucky winner!!* 🎉🎉🎉",
+                                    text: ":portal_orange_parrot: *Hello girls and boys!!* :portal_blue_parrot:",
                                 },
                             },
                             {
                                 type: "section",
                                 text: {
                                     type: "mrkdwn",
-                                    text: "You've been chosen to share _\"voluntarily\"_ some pictures 📷 of your super fun weekend.\nIf you're weekend wasn't fun, get some stock pictures from Google 🤪",
+                                    text: "I know I seem loud, but don't mind me, I'm just taking a look around 👀",
                                 },
                             },
                             {
                                 type: "section",
                                 text: {
                                     type: "mrkdwn",
-                                    text: "Share them right now!! (on the #random channel)",
+                                    text: 'You all have been chosen as our weekly :vercel: holy trinity :vercel:.\n\nThis means you\'re "recommended" (:rage:) to schedule a meeting between yourselves.\n\nShare something, become friends, have a nice sporty threeway boxing :boxing_glove: match, whatever!',
                                 },
                             },
                         ],
-                        text: "🎉🎉🎉 *You are the lucky winner!!* 🎉🎉🎉 You've been chosen to share _\"voluntarily\"_ some pictures 📷 of your super fun weekend.\nIf you're weekend wasn't fun, get some stock pictures from Google 🤪 Share them right now!! (on the #random channel).",
-                        channel: user.id,
+                        text: ":portal_blue_parrot: *Hello girls and boys!!* :portal_orange_parrot: I know I seem loud, but don't mind me, I'm just taking a look around 👀 You all have been chosen as our weekly :vercel: holy trinity :vercel:.\nThis just means that you are \"recommended\" (do it, or else...) to schedule a meeting between yourselves.\nShare something, become friends, have a nice sporty threeway boxing match, whatever!",
+                        channel: channel.id,
                     })];
-            case 1:
-                _a = _d.sent(), ok = _a.ok, error = _a.error;
+            case 2:
+                (_b = _c.sent(), ok = _b.ok, error = _b.error);
                 if (!ok)
                     throw error;
-                console.log("\uD83E\uDD16 - i'm done yelling at " + ((_c = (_b = user.real_name) !== null && _b !== void 0 ? _b : user.name) !== null && _c !== void 0 ? _c : "someone(?)"));
-                return [3 /*break*/, 3];
-            case 2:
-                error_1 = _d.sent();
+                console.log("\uD83E\uDD16 - i'm done yelling at " + users.join(", ") + " (sorry for the boring ids)");
+                return [3 /*break*/, 4];
+            case 3:
+                error_1 = _c.sent();
                 console.error(error_1);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); };
-var pickRandomPeople = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, ok, members, error, error_2;
+var pickRandomPeopleFromDifferentGroups = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, ok, error, usergroups, groups, error_2;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _b.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, client.users.list()];
+                return [4 /*yield*/, client.usergroups.list({
+                        include_disabled: false,
+                        include_users: true,
+                    })];
             case 1:
-                _a = _b.sent(), ok = _a.ok, members = _a.members, error = _a.error;
+                _a = _b.sent(), ok = _a.ok, error = _a.error, usergroups = _a.usergroups;
                 if (!ok)
                     throw error;
-                return [2 /*return*/, (0, pickRandom_1.default)(members.filter(function (_a) {
-                        var deleted = _a.deleted;
-                        return !deleted;
-                    }), 3)];
+                groups = (0, pickRandom_1.default)(usergroups, 3);
+                return [2 /*return*/, groups.map(function (group) { return (0, pickRandom_1.default)(group.users, 1)[0]; })];
             case 2:
                 error_2 = _b.sent();
                 console.error(error_2);
@@ -116,30 +124,17 @@ var pickRandomPeople = function () { return __awaiter(void 0, void 0, void 0, fu
         }
     });
 }); };
-// const pickUser = async (userId: string) => {
-//   try {
-//     const { ok, error, user } = await client.users.info({ user: userId });
-//     if (!ok) throw error;
-//     return user;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
 var main = function () { return __awaiter(void 0, void 0, void 0, function () {
     var selectedPeople;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, pickRandomPeople()];
+            case 0: return [4 /*yield*/, pickRandomPeopleFromDifferentGroups()];
             case 1:
                 selectedPeople = _a.sent();
-                // for testing
-                // const selectedPeople = [await pickUser("U02DFN1AW3T")];
                 if (selectedPeople === undefined)
                     console.log("🤖 - i wasn't able to yell at people!");
                 else {
-                    selectedPeople
-                        .filter(function (user) { return user !== undefined; })
-                        .forEach(function (user) { return sendMessage(user); });
+                    sendGroupMessage(selectedPeople);
                     console.log("🤖 - i'm done yelling at people!");
                 }
                 return [2 /*return*/];
