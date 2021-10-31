@@ -35,8 +35,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var web_api_1 = require("@slack/web-api");
+var pickRandom_1 = __importDefault(require("../lib/pickRandom"));
 // WebClient insantiates a client that can call API methods
 // When using Bolt, you can use either `app.client` or the `client` passed to listeners.
 var client = new web_api_1.WebClient(process.env.SLACK_API_TOKEN);
@@ -66,18 +70,21 @@ var publishMessage = function (id, text) { return __awaiter(void 0, void 0, void
     });
 }); };
 var pickRandomPeople = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var result, error_2;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var _a, ok, members, error, threeRandomUsers, error_2;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
+                _b.trys.push([0, 2, , 3]);
                 return [4 /*yield*/, client.users.list()];
             case 1:
-                result = _a.sent();
-                console.log(result);
+                _a = _b.sent(), ok = _a.ok, members = _a.members, error = _a.error;
+                if (!ok)
+                    throw error;
+                threeRandomUsers = (0, pickRandom_1.default)(members, 3);
+                console.log(threeRandomUsers);
                 return [3 /*break*/, 3];
             case 2:
-                error_2 = _a.sent();
+                error_2 = _b.sent();
                 console.error(error_2);
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];

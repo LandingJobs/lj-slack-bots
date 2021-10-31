@@ -1,4 +1,5 @@
 import { WebClient } from "@slack/web-api";
+import pickRandom from "../lib/pickRandom";
 
 // WebClient insantiates a client that can call API methods
 // When using Bolt, you can use either `app.client` or the `client` passed to listeners.
@@ -24,9 +25,12 @@ const publishMessage = async (id: string, text: string) => {
 const pickRandomPeople = async () => {
   try {
     // Call the conversations.list method using the built-in WebClient
-    const result = await client.users.list();
+    const { ok, members, error } = await client.users.list();
+    if (!ok) throw error;
 
-    console.log(result);
+    const threeRandomUsers = pickRandom(members!, 3);
+
+    console.log(threeRandomUsers);
   } catch (error) {
     console.error(error);
   }
