@@ -54,7 +54,10 @@ const pickRandomPeople = async () => {
     if (!ok) throw error;
 
     return pickRandom(
-      members!.filter(({ deleted }) => !deleted),
+      members!.filter(
+        ({ deleted, is_workflow_bot, is_bot, is_app_user }) =>
+          !deleted && !is_app_user && !is_bot && !is_workflow_bot
+      ),
       3
     );
   } catch (error) {

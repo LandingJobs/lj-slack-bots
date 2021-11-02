@@ -105,8 +105,8 @@ var pickRandomPeople = function () { return __awaiter(void 0, void 0, void 0, fu
                 if (!ok)
                     throw error;
                 return [2 /*return*/, (0, pickRandom_1.default)(members.filter(function (_a) {
-                        var deleted = _a.deleted;
-                        return !deleted;
+                        var deleted = _a.deleted, is_workflow_bot = _a.is_workflow_bot, is_bot = _a.is_bot, is_app_user = _a.is_app_user;
+                        return !deleted && !is_app_user && !is_bot && !is_workflow_bot;
                     }), 3)];
             case 2:
                 error_2 = _b.sent();
