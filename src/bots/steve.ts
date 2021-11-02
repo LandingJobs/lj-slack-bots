@@ -1,4 +1,5 @@
 import { WebClient } from "@slack/web-api";
+import isUserOnVacation from "../lib/isUserOnVacation";
 import pickRandom from "../lib/pickRandom";
 
 // the types of the package seem to be wrong
@@ -8,7 +9,7 @@ declare module "@slack/web-api/dist/response/UsergroupsListResponse" {
   }
 }
 
-export const cronTimer = "0 12 * * 1"; // every monday at 11am
+export const cronTimer = "0 12 * * 1"; // every monday at 12am
 export const jobId = "steve";
 
 const client = new WebClient(process.env.SLACK_API_TOKEN);
@@ -68,7 +69,17 @@ const pickRandomPeopleFromDifferentGroups = async () => {
 
     const groups = pickRandom(usergroups!, 3);
 
-    return groups.map((group) => pickRandom(group.users!, 1)[0]);
+    return await Promise.all(
+      groups.map(async (group) => {
+        let [user] = pickRandom(group.users!, 1);
+        let userInfo = await client.users.info({ user });
+        while (!userInfo.ok || isUserOnVacation(userInfo.user?.profile)) {
+          [user] = pickRandom(group.users!, 1);
+          userInfo = await client.users.info({ user });
+        }
+        return user;
+      })
+    );
   } catch (error) {
     console.error(error);
   }

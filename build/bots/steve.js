@@ -43,7 +43,7 @@ exports.jobId = exports.cronTimer = void 0;
 var web_api_1 = require("@slack/web-api");
 var isUserOnVacation_1 = __importDefault(require("../lib/isUserOnVacation"));
 var pickRandom_1 = __importDefault(require("../lib/pickRandom"));
-exports.cronTimer = "0 * * * *"; // every monday at 11am
+exports.cronTimer = "0 12 * * 1"; // every monday at 12am
 exports.jobId = "steve";
 var client = new web_api_1.WebClient(process.env.SLACK_API_TOKEN);
 var sendGroupMessage = function (users) { return __awaiter(void 0, void 0, void 0, function () {

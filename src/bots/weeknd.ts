@@ -3,13 +3,12 @@ import { Member } from "@slack/web-api/dist/response/UsersListResponse";
 import { User } from "@slack/web-api/dist/response/UsersInfoResponse";
 
 import pickRandom from "../lib/pickRandom";
+import isUserOnVacation from "../lib/isUserOnVacation";
 
 export const cronTimer = "0 11 * * 1"; // every monday at 11am
 export const jobId = "weeknd";
 
 const client = new WebClient(process.env.SLACK_API_TOKEN);
-
-const avoidStatuses = ["Vacationing", "Vacations", "Out of office"];
 
 const sendMessage = async (user: Member | User) => {
   try {
@@ -62,7 +61,7 @@ const pickRandomPeople = async () => {
           !is_app_user &&
           !is_bot &&
           !is_workflow_bot &&
-          !avoidStatuses.includes(profile?.status_text ?? "")
+          !isUserOnVacation(profile)
       ),
       3
     );
