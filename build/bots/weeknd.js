@@ -42,6 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.jobId = exports.cronTimer = void 0;
 var web_api_1 = require("@slack/web-api");
 var pickRandom_1 = __importDefault(require("../lib/pickRandom"));
+var isUserOnVacation_1 = __importDefault(require("../lib/isUserOnVacation"));
 exports.cronTimer = "0 11 * * 1"; // every monday at 11am
 exports.jobId = "weeknd";
 var client = new web_api_1.WebClient(process.env.SLACK_API_TOKEN);
@@ -105,8 +106,12 @@ var pickRandomPeople = function () { return __awaiter(void 0, void 0, void 0, fu
                 if (!ok)
                     throw error;
                 return [2 /*return*/, (0, pickRandom_1.default)(members.filter(function (_a) {
-                        var deleted = _a.deleted, is_workflow_bot = _a.is_workflow_bot, is_bot = _a.is_bot, is_app_user = _a.is_app_user;
-                        return !deleted && !is_app_user && !is_bot && !is_workflow_bot;
+                        var deleted = _a.deleted, is_workflow_bot = _a.is_workflow_bot, is_bot = _a.is_bot, is_app_user = _a.is_app_user, profile = _a.profile;
+                        return !deleted &&
+                            !is_app_user &&
+                            !is_bot &&
+                            !is_workflow_bot &&
+                            !(0, isUserOnVacation_1.default)(profile);
                     }), 3)];
             case 2:
                 error_2 = _b.sent();

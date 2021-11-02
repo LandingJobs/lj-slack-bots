@@ -41,8 +41,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.jobId = exports.cronTimer = void 0;
 var web_api_1 = require("@slack/web-api");
+var isUserOnVacation_1 = __importDefault(require("../lib/isUserOnVacation"));
 var pickRandom_1 = __importDefault(require("../lib/pickRandom"));
-exports.cronTimer = "0 12 * * 1"; // every monday at 11am
+exports.cronTimer = "0 * * * *"; // every monday at 11am
 exports.jobId = "steve";
 var client = new web_api_1.WebClient(process.env.SLACK_API_TOKEN);
 var sendGroupMessage = function (users) { return __awaiter(void 0, void 0, void 0, function () {
@@ -105,7 +106,7 @@ var pickRandomPeopleFromDifferentGroups = function () { return __awaiter(void 0,
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _b.trys.push([0, 2, , 3]);
+                _b.trys.push([0, 3, , 4]);
                 return [4 /*yield*/, client.usergroups.list({
                         include_disabled: false,
                         include_users: true,
@@ -115,12 +116,34 @@ var pickRandomPeopleFromDifferentGroups = function () { return __awaiter(void 0,
                 if (!ok)
                     throw error;
                 groups = (0, pickRandom_1.default)(usergroups, 3);
-                return [2 /*return*/, groups.map(function (group) { return (0, pickRandom_1.default)(group.users, 1)[0]; })];
-            case 2:
+                return [4 /*yield*/, Promise.all(groups.map(function (group) { return __awaiter(void 0, void 0, void 0, function () {
+                        var user, userInfo;
+                        var _a;
+                        return __generator(this, function (_b) {
+                            switch (_b.label) {
+                                case 0:
+                                    user = (0, pickRandom_1.default)(group.users, 1)[0];
+                                    return [4 /*yield*/, client.users.info({ user: user })];
+                                case 1:
+                                    userInfo = _b.sent();
+                                    _b.label = 2;
+                                case 2:
+                                    if (!(!userInfo.ok || (0, isUserOnVacation_1.default)((_a = userInfo.user) === null || _a === void 0 ? void 0 : _a.profile))) return [3 /*break*/, 4];
+                                    user = (0, pickRandom_1.default)(group.users, 1)[0];
+                                    return [4 /*yield*/, client.users.info({ user: user })];
+                                case 3:
+                                    userInfo = _b.sent();
+                                    return [3 /*break*/, 2];
+                                case 4: return [2 /*return*/, user];
+                            }
+                        });
+                    }); }))];
+            case 2: return [2 /*return*/, _b.sent()];
+            case 3:
                 error_2 = _b.sent();
                 console.error(error_2);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); };

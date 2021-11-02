@@ -9,6 +9,8 @@ export const jobId = "weeknd";
 
 const client = new WebClient(process.env.SLACK_API_TOKEN);
 
+const avoidStatuses = ["Vacationing", "Vacations", "Out of office"];
+
 const sendMessage = async (user: Member | User) => {
   try {
     const { ok, error } = await client.chat.postMessage({
@@ -55,8 +57,12 @@ const pickRandomPeople = async () => {
 
     return pickRandom(
       members!.filter(
-        ({ deleted, is_workflow_bot, is_bot, is_app_user }) =>
-          !deleted && !is_app_user && !is_bot && !is_workflow_bot
+        ({ deleted, is_workflow_bot, is_bot, is_app_user, profile }) =>
+          !deleted &&
+          !is_app_user &&
+          !is_bot &&
+          !is_workflow_bot &&
+          !avoidStatuses.includes(profile?.status_text ?? "")
       ),
       3
     );
