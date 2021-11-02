@@ -1,7 +1,7 @@
 import randomConvoBot, {
   cronTimer as randomConvoCronTimer,
   jobId as randomConvoJobId,
-} from "./randomConvo";
+} from "./steve";
 import weekndBot, {
   cronTimer as weekndCronTimer,
   jobId as weekndJobId,

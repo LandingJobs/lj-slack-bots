@@ -19,7 +19,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var randomConvo_1 = __importStar(require("./randomConvo"));
+var steve_1 = __importStar(require("./steve"));
 var weeknd_1 = __importStar(require("./weeknd"));
 var bots = [
     {
@@ -30,9 +30,9 @@ var bots = [
     },
     {
         botId: "randomConvoBot",
-        bot: randomConvo_1.default,
-        jobId: randomConvo_1.jobId,
-        cronTimer: randomConvo_1.cronTimer,
+        bot: steve_1.default,
+        jobId: steve_1.jobId,
+        cronTimer: steve_1.cronTimer,
     },
 ];
 exports.default = bots;

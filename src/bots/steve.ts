@@ -9,7 +9,7 @@ declare module "@slack/web-api/dist/response/UsergroupsListResponse" {
 }
 
 export const cronTimer = "0 12 * * 1"; // every monday at 11am
-export const jobId = "randomConvo";
+export const jobId = "steve";
 
 const client = new WebClient(process.env.SLACK_API_TOKEN);
 

@@ -6,7 +6,7 @@
 
 this 🤖 wants you to share your amazing weekend with _everyone_ :) sooo cute
 
-### randomConvoBot
+### steveBot
 
 this 🤖 wants you talk to random people, _even if you don't want to_. the 🤖 really really wants you to do it
 
