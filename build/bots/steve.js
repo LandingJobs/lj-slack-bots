@@ -164,4 +164,5 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
         }
     });
 }); };
+main();
 exports.default = main;
