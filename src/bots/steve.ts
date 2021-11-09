@@ -9,8 +9,8 @@ declare module "@slack/web-api/dist/response/UsergroupsListResponse" {
   }
 }
 
-// export const cronTimer = "0 12 * * Monday"; // every monday at 12am
-export const cronTimer = "*/3 * * * *"; // testing
+export const cronTimer = "0 12 * * Monday"; // every monday at 12am
+// export const cronTimer = "*/3 * * * *"; // testing
 export const jobId = "steve";
 
 const client = new WebClient(process.env.STEVE_API_TOKEN);
@@ -63,7 +63,6 @@ const sendGroupMessage = async (users: string[]) => {
 
 const pickRandomPeopleFromDifferentGroups = async () => {
   try {
-    // Call the conversations.list method using the built-in WebClient
     const { ok, error, usergroups } = await client.usergroups.list({
       include_disabled: false,
       include_users: true,
@@ -89,9 +88,9 @@ const pickRandomPeopleFromDifferentGroups = async () => {
 };
 
 const main = async () => {
-  // const selectedPeople = await pickRandomPeopleFromDifferentGroups();
+  const selectedPeople = await pickRandomPeopleFromDifferentGroups();
 
-  const selectedPeople = ["U02DFN1AW3T"];
+  // const selectedPeople = ["U02DFN1AW3T"]; // testing
 
   if (selectedPeople === undefined)
     console.log("steve 🤖 - i wasn't able to yell at people!");

@@ -43,8 +43,7 @@ exports.jobId = exports.cronTimer = void 0;
 var web_api_1 = require("@slack/web-api");
 var isUserOnVacation_1 = __importDefault(require("../lib/isUserOnVacation"));
 var pickRandom_1 = __importDefault(require("../lib/pickRandom"));
-// export const cronTimer = "0 12 * * Monday"; // every monday at 12am
-exports.cronTimer = "*/3 * * * *"; // testing
+exports.cronTimer = "0 12 * * Monday";
 exports.jobId = "steve";
 var client = new web_api_1.WebClient(process.env.STEVE_API_TOKEN);
 var sendGroupMessage = function (users) { return __awaiter(void 0, void 0, void 0, function () {
@@ -54,14 +53,14 @@ var sendGroupMessage = function (users) { return __awaiter(void 0, void 0, void 
         switch (_c.label) {
             case 0:
                 _c.trys.push([0, 3, , 4]);
-                return [4 /*yield*/, client.conversations.open({
+                return [4, client.conversations.open({
                         users: users.join(", "),
                     })];
             case 1:
                 _a = _c.sent(), ok = _a.ok, channel = _a.channel, error = _a.error;
                 if (!ok)
                     throw error;
-                return [4 /*yield*/, client.chat.postMessage({
+                return [4, client.chat.postMessage({
                         blocks: [
                             {
                                 type: "section",
@@ -93,12 +92,12 @@ var sendGroupMessage = function (users) { return __awaiter(void 0, void 0, void 
                 if (!ok)
                     throw error;
                 console.log("steve \uD83E\uDD16 - i'm done yelling at " + users.join(", ") + " (sorry for the boring ids)");
-                return [3 /*break*/, 4];
+                return [3, 4];
             case 3:
                 error_1 = _c.sent();
                 console.error(error_1);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3, 4];
+            case 4: return [2];
         }
     });
 }); };
@@ -108,7 +107,7 @@ var pickRandomPeopleFromDifferentGroups = function () { return __awaiter(void 0,
         switch (_b.label) {
             case 0:
                 _b.trys.push([0, 3, , 4]);
-                return [4 /*yield*/, client.usergroups.list({
+                return [4, client.usergroups.list({
                         include_disabled: false,
                         include_users: true,
                     })];
@@ -117,48 +116,52 @@ var pickRandomPeopleFromDifferentGroups = function () { return __awaiter(void 0,
                 if (!ok)
                     throw error;
                 groups = (0, pickRandom_1.default)(usergroups, 3);
-                return [4 /*yield*/, Promise.all(groups.map(function (group) { return __awaiter(void 0, void 0, void 0, function () {
+                return [4, Promise.all(groups.map(function (group) { return __awaiter(void 0, void 0, void 0, function () {
                         var user, userInfo;
                         var _a;
                         return __generator(this, function (_b) {
                             switch (_b.label) {
                                 case 0:
                                     user = (0, pickRandom_1.default)(group.users, 1)[0];
-                                    return [4 /*yield*/, client.users.info({ user: user })];
+                                    return [4, client.users.info({ user: user })];
                                 case 1:
                                     userInfo = _b.sent();
                                     _b.label = 2;
                                 case 2:
-                                    if (!(!userInfo.ok || (0, isUserOnVacation_1.default)((_a = userInfo.user) === null || _a === void 0 ? void 0 : _a.profile))) return [3 /*break*/, 4];
+                                    if (!(!userInfo.ok || (0, isUserOnVacation_1.default)((_a = userInfo.user) === null || _a === void 0 ? void 0 : _a.profile))) return [3, 4];
                                     user = (0, pickRandom_1.default)(group.users, 1)[0];
-                                    return [4 /*yield*/, client.users.info({ user: user })];
+                                    return [4, client.users.info({ user: user })];
                                 case 3:
                                     userInfo = _b.sent();
-                                    return [3 /*break*/, 2];
-                                case 4: return [2 /*return*/, user];
+                                    return [3, 2];
+                                case 4: return [2, user];
                             }
                         });
                     }); }))];
-            case 2: return [2 /*return*/, _b.sent()];
+            case 2: return [2, _b.sent()];
             case 3:
                 error_2 = _b.sent();
                 console.error(error_2);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3, 4];
+            case 4: return [2];
         }
     });
 }); };
 var main = function () { return __awaiter(void 0, void 0, void 0, function () {
     var selectedPeople;
     return __generator(this, function (_a) {
-        selectedPeople = ["U02DFN1AW3T"];
-        if (selectedPeople === undefined)
-            console.log("steve 🤖 - i wasn't able to yell at people!");
-        else {
-            sendGroupMessage(selectedPeople);
-            console.log("steve 🤖 - i'm done yelling at people!");
+        switch (_a.label) {
+            case 0: return [4, pickRandomPeopleFromDifferentGroups()];
+            case 1:
+                selectedPeople = _a.sent();
+                if (selectedPeople === undefined)
+                    console.log("steve 🤖 - i wasn't able to yell at people!");
+                else {
+                    sendGroupMessage(selectedPeople);
+                    console.log("steve 🤖 - i'm done yelling at people!");
+                }
+                return [2];
         }
-        return [2 /*return*/];
     });
 }); };
 exports.default = main;

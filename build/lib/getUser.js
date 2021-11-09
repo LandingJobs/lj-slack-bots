@@ -42,17 +42,17 @@ var getUser = function (userId, client) { return __awaiter(void 0, void 0, void 
         switch (_b.label) {
             case 0:
                 _b.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, client.users.info({ user: userId })];
+                return [4, client.users.info({ user: userId })];
             case 1:
                 _a = _b.sent(), ok = _a.ok, error = _a.error, user = _a.user;
                 if (!ok)
                     throw error;
-                return [2 /*return*/, user];
+                return [2, user];
             case 2:
                 error_1 = _b.sent();
                 console.error(error_1);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3, 3];
+            case 3: return [2];
         }
     });
 }); };

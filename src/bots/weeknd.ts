@@ -4,10 +4,10 @@ import type { User } from "@slack/web-api/dist/response/UsersInfoResponse";
 
 import pickRandom from "../lib/pickRandom";
 import isUserOnVacation from "../lib/isUserOnVacation";
-import getUser from "../lib/getUser";
+// import getUser from "../lib/getUser"; // testing
 
-// export const cronTimer = "0 11 * * Monday"; // every monday at 11am
-export const cronTimer = "*/3 * * * *"; // testing
+export const cronTimer = "0 11 * * Monday"; // every monday at 11am
+// export const cronTimer = "*/3 * * * *"; // testing
 export const jobId = "weeknd";
 
 const client = new WebClient(process.env.WEEKND_API_TOKEN);
@@ -75,10 +75,9 @@ const pickRandomPeople = async () => {
 };
 
 const main = async () => {
-  // const selectedPeople = await pickRandomPeople();
+  const selectedPeople = await pickRandomPeople();
 
-  // for testing
-  const selectedPeople = [await getUser("U02DFN1AW3T", client)];
+  // const selectedPeople = [await getUser("U02DFN1AW3T", client)]; // testing
 
   if (selectedPeople === undefined)
     console.log("weeknd 🤖 - i wasn't able to yell at people!");

@@ -43,9 +43,7 @@ exports.jobId = exports.cronTimer = void 0;
 var web_api_1 = require("@slack/web-api");
 var pickRandom_1 = __importDefault(require("../lib/pickRandom"));
 var isUserOnVacation_1 = __importDefault(require("../lib/isUserOnVacation"));
-var getUser_1 = __importDefault(require("../lib/getUser"));
-// export const cronTimer = "0 11 * * Monday"; // every monday at 11am
-exports.cronTimer = "*/3 * * * *"; // testing
+exports.cronTimer = "0 11 * * Monday";
 exports.jobId = "weeknd";
 var client = new web_api_1.WebClient(process.env.WEEKND_API_TOKEN);
 var sendMessage = function (user) { return __awaiter(void 0, void 0, void 0, function () {
@@ -55,7 +53,7 @@ var sendMessage = function (user) { return __awaiter(void 0, void 0, void 0, fun
         switch (_d.label) {
             case 0:
                 _d.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, client.chat.postMessage({
+                return [4, client.chat.postMessage({
                         blocks: [
                             {
                                 type: "section",
@@ -87,12 +85,12 @@ var sendMessage = function (user) { return __awaiter(void 0, void 0, void 0, fun
                 if (!ok)
                     throw error;
                 console.log("weeknd \uD83E\uDD16 - i'm done yelling at " + ((_c = (_b = user.real_name) !== null && _b !== void 0 ? _b : user.name) !== null && _c !== void 0 ? _c : "someone(?)"));
-                return [3 /*break*/, 3];
+                return [3, 3];
             case 2:
                 error_1 = _d.sent();
                 console.error(error_1);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3, 3];
+            case 3: return [2];
         }
     });
 }); };
@@ -102,12 +100,12 @@ var pickRandomPeople = function () { return __awaiter(void 0, void 0, void 0, fu
         switch (_b.label) {
             case 0:
                 _b.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, client.users.list()];
+                return [4, client.users.list()];
             case 1:
                 _a = _b.sent(), ok = _a.ok, members = _a.members, error = _a.error;
                 if (!ok)
                     throw error;
-                return [2 /*return*/, (0, pickRandom_1.default)(members.filter(function (_a) {
+                return [2, (0, pickRandom_1.default)(members.filter(function (_a) {
                         var deleted = _a.deleted, is_workflow_bot = _a.is_workflow_bot, is_bot = _a.is_bot, is_app_user = _a.is_app_user, profile = _a.profile;
                         return !deleted &&
                             !is_app_user &&
@@ -118,8 +116,8 @@ var pickRandomPeople = function () { return __awaiter(void 0, void 0, void 0, fu
             case 2:
                 error_2 = _b.sent();
                 console.error(error_2);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3, 3];
+            case 3: return [2];
         }
     });
 }); };
@@ -127,9 +125,9 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
     var selectedPeople;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, (0, getUser_1.default)("U02DFN1AW3T", client)];
+            case 0: return [4, pickRandomPeople()];
             case 1:
-                selectedPeople = [_a.sent()];
+                selectedPeople = _a.sent();
                 if (selectedPeople === undefined)
                     console.log("weeknd 🤖 - i wasn't able to yell at people!");
                 else {
@@ -138,7 +136,7 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
                         .forEach(function (user) { return sendMessage(user); });
                     console.log("weeknd 🤖 - i'm done yelling at people!");
                 }
-                return [2 /*return*/];
+                return [2];
         }
     });
 }); };
