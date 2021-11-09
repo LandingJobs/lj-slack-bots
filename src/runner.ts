@@ -14,7 +14,7 @@ function start() {
   const process: ProcessCallbackFunction<{ bot: string }> = (job) => {
     bots.find(({ jobId }) => jobId === job.data.bot)?.bot();
   };
-  workQueue.process(50, process);
+  workQueue.process(1, process);
 }
 
 // Initialize the clustered worker process

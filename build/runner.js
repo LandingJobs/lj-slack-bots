@@ -19,7 +19,7 @@ function start() {
             return jobId === job.data.bot;
         })) === null || _a === void 0 ? void 0 : _a.bot();
     };
-    workQueue.process(50, process);
+    workQueue.process(1, process);
 }
 // Initialize the clustered worker process
 // See: https://devcenter.heroku.com/articles/node-concurrency for more info
