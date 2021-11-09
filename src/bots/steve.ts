@@ -9,7 +9,8 @@ declare module "@slack/web-api/dist/response/UsergroupsListResponse" {
   }
 }
 
-export const cronTimer = "0 12 * * 1"; // every monday at 12am
+// export const cronTimer = "0 12 * * Monday"; // every monday at 12am
+export const cronTimer = "*/3 * * * *"; // testing
 export const jobId = "steve";
 
 const client = new WebClient(process.env.STEVE_API_TOKEN);
@@ -51,7 +52,9 @@ const sendGroupMessage = async (users: string[]) => {
     if (!ok) throw error;
 
     console.log(
-      `🤖 - i'm done yelling at ${users.join(", ")} (sorry for the boring ids)`
+      `steve 🤖 - i'm done yelling at ${users.join(
+        ", "
+      )} (sorry for the boring ids)`
     );
   } catch (error) {
     console.error(error);
@@ -86,13 +89,15 @@ const pickRandomPeopleFromDifferentGroups = async () => {
 };
 
 const main = async () => {
-  const selectedPeople = await pickRandomPeopleFromDifferentGroups();
+  // const selectedPeople = await pickRandomPeopleFromDifferentGroups();
+
+  const selectedPeople = ["U02DFN1AW3T", "U026GJ911FY"];
 
   if (selectedPeople === undefined)
-    console.log("🤖 - i wasn't able to yell at people!");
+    console.log("steve 🤖 - i wasn't able to yell at people!");
   else {
     sendGroupMessage(selectedPeople);
-    console.log("🤖 - i'm done yelling at people!");
+    console.log("steve 🤖 - i'm done yelling at people!");
   }
 };
 

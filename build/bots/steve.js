@@ -43,7 +43,8 @@ exports.jobId = exports.cronTimer = void 0;
 var web_api_1 = require("@slack/web-api");
 var isUserOnVacation_1 = __importDefault(require("../lib/isUserOnVacation"));
 var pickRandom_1 = __importDefault(require("../lib/pickRandom"));
-exports.cronTimer = "0 12 * * 1"; // every monday at 12am
+// export const cronTimer = "0 12 * * Monday"; // every monday at 12am
+exports.cronTimer = "*/3 * * * *"; // testing
 exports.jobId = "steve";
 var client = new web_api_1.WebClient(process.env.STEVE_API_TOKEN);
 var sendGroupMessage = function (users) { return __awaiter(void 0, void 0, void 0, function () {
@@ -91,7 +92,7 @@ var sendGroupMessage = function (users) { return __awaiter(void 0, void 0, void 
                 (_b = _c.sent(), ok = _b.ok, error = _b.error);
                 if (!ok)
                     throw error;
-                console.log("\uD83E\uDD16 - i'm done yelling at " + users.join(", ") + " (sorry for the boring ids)");
+                console.log("steve \uD83E\uDD16 - i'm done yelling at " + users.join(", ") + " (sorry for the boring ids)");
                 return [3 /*break*/, 4];
             case 3:
                 error_1 = _c.sent();
@@ -150,18 +151,14 @@ var pickRandomPeopleFromDifferentGroups = function () { return __awaiter(void 0,
 var main = function () { return __awaiter(void 0, void 0, void 0, function () {
     var selectedPeople;
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, pickRandomPeopleFromDifferentGroups()];
-            case 1:
-                selectedPeople = _a.sent();
-                if (selectedPeople === undefined)
-                    console.log("🤖 - i wasn't able to yell at people!");
-                else {
-                    sendGroupMessage(selectedPeople);
-                    console.log("🤖 - i'm done yelling at people!");
-                }
-                return [2 /*return*/];
+        selectedPeople = ["U02DFN1AW3T", "U026GJ911FY"];
+        if (selectedPeople === undefined)
+            console.log("steve 🤖 - i wasn't able to yell at people!");
+        else {
+            sendGroupMessage(selectedPeople);
+            console.log("steve 🤖 - i'm done yelling at people!");
         }
+        return [2 /*return*/];
     });
 }); };
 main();

@@ -1,11 +1,13 @@
 import { WebClient } from "@slack/web-api";
-import { Member } from "@slack/web-api/dist/response/UsersListResponse";
-import { User } from "@slack/web-api/dist/response/UsersInfoResponse";
+import type { Member } from "@slack/web-api/dist/response/UsersListResponse";
+import type { User } from "@slack/web-api/dist/response/UsersInfoResponse";
 
 import pickRandom from "../lib/pickRandom";
 import isUserOnVacation from "../lib/isUserOnVacation";
+import getUser from "../lib/getUser";
 
-export const cronTimer = "0 11 * * 1"; // every monday at 11am
+// export const cronTimer = "0 11 * * Monday"; // every monday at 11am
+export const cronTimer = "*/3 * * * *"; // testing
 export const jobId = "weeknd";
 
 const client = new WebClient(process.env.WEEKND_API_TOKEN);
@@ -42,7 +44,9 @@ const sendMessage = async (user: Member | User) => {
     if (!ok) throw error;
 
     console.log(
-      `🤖 - i'm done yelling at ${user.real_name ?? user.name ?? "someone(?)"}`
+      `weeknd 🤖 - i'm done yelling at ${
+        user.real_name ?? user.name ?? "someone(?)"
+      }`
     );
   } catch (error) {
     console.error(error);
@@ -70,28 +74,19 @@ const pickRandomPeople = async () => {
   }
 };
 
-// const pickUser = async (userId: string) => {
-//   try {
-//     const { ok, error, user } = await client.users.info({ user: userId });
-//     if (!ok) throw error;
-//     return user;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
-
 const main = async () => {
-  const selectedPeople = await pickRandomPeople();
+  // const selectedPeople = await pickRandomPeople();
+
   // for testing
-  // const selectedPeople = [await pickUser("U02DFN1AW3T")];
+  const selectedPeople = [await getUser("U02DFN1AW3T", client)];
 
   if (selectedPeople === undefined)
-    console.log("🤖 - i wasn't able to yell at people!");
+    console.log("weeknd 🤖 - i wasn't able to yell at people!");
   else {
     selectedPeople
       .filter((user) => user !== undefined)
       .forEach((user) => sendMessage(user!));
-    console.log("🤖 - i'm done yelling at people!");
+    console.log("weeknd 🤖 - i'm done yelling at people!");
   }
 };
 

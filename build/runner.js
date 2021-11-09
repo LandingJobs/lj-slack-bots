@@ -11,6 +11,7 @@ var REDIS_URL = process.env.REDIS_URL || "redis://127.0.0.1:6379";
 function start() {
     // Connect to the named work queue
     var workQueue = new bull_1.default("bots", REDIS_URL);
+    workQueue.empty();
     var process = function (job) {
         var _a;
         (_a = bots_1.default.find(function (_a) {

@@ -1,5 +1,5 @@
-import { Profile as ListProfile } from "@slack/web-api/dist/response/UsersListResponse";
-import { Profile as InfoProfile } from "@slack/web-api/dist/response/UsersInfoResponse";
+import type { Profile as ListProfile } from "@slack/web-api/dist/response/UsersListResponse";
+import type { Profile as InfoProfile } from "@slack/web-api/dist/response/UsersInfoResponse";
 
 export const avoidStatuses = ["Vacationing", "Vacations", "Out of office"];
 

@@ -9,6 +9,7 @@ const REDIS_URL = process.env.REDIS_URL || "redis://127.0.0.1:6379";
 function start() {
   // Connect to the named work queue
   const workQueue = new Queue("bots", REDIS_URL);
+  workQueue.empty();
 
   const process: ProcessCallbackFunction<{ bot: string }> = (job) => {
     bots.find(({ jobId }) => jobId === job.data.bot)?.bot();

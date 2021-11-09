@@ -43,7 +43,9 @@ exports.jobId = exports.cronTimer = void 0;
 var web_api_1 = require("@slack/web-api");
 var pickRandom_1 = __importDefault(require("../lib/pickRandom"));
 var isUserOnVacation_1 = __importDefault(require("../lib/isUserOnVacation"));
-exports.cronTimer = "0 11 * * 1"; // every monday at 11am
+var getUser_1 = __importDefault(require("../lib/getUser"));
+// export const cronTimer = "0 11 * * Monday"; // every monday at 11am
+exports.cronTimer = "*/3 * * * *"; // testing
 exports.jobId = "weeknd";
 var client = new web_api_1.WebClient(process.env.WEEKND_API_TOKEN);
 var sendMessage = function (user) { return __awaiter(void 0, void 0, void 0, function () {
@@ -84,7 +86,7 @@ var sendMessage = function (user) { return __awaiter(void 0, void 0, void 0, fun
                 _a = _d.sent(), ok = _a.ok, error = _a.error;
                 if (!ok)
                     throw error;
-                console.log("\uD83E\uDD16 - i'm done yelling at " + ((_c = (_b = user.real_name) !== null && _b !== void 0 ? _b : user.name) !== null && _c !== void 0 ? _c : "someone(?)"));
+                console.log("weeknd \uD83E\uDD16 - i'm done yelling at " + ((_c = (_b = user.real_name) !== null && _b !== void 0 ? _b : user.name) !== null && _c !== void 0 ? _c : "someone(?)"));
                 return [3 /*break*/, 3];
             case 2:
                 error_1 = _d.sent();
@@ -121,31 +123,20 @@ var pickRandomPeople = function () { return __awaiter(void 0, void 0, void 0, fu
         }
     });
 }); };
-// const pickUser = async (userId: string) => {
-//   try {
-//     const { ok, error, user } = await client.users.info({ user: userId });
-//     if (!ok) throw error;
-//     return user;
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
 var main = function () { return __awaiter(void 0, void 0, void 0, function () {
     var selectedPeople;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, pickRandomPeople()];
+            case 0: return [4 /*yield*/, (0, getUser_1.default)("U02DFN1AW3T", client)];
             case 1:
-                selectedPeople = _a.sent();
-                // for testing
-                // const selectedPeople = [await pickUser("U02DFN1AW3T")];
+                selectedPeople = [_a.sent()];
                 if (selectedPeople === undefined)
-                    console.log("🤖 - i wasn't able to yell at people!");
+                    console.log("weeknd 🤖 - i wasn't able to yell at people!");
                 else {
                     selectedPeople
                         .filter(function (user) { return user !== undefined; })
                         .forEach(function (user) { return sendMessage(user); });
-                    console.log("🤖 - i'm done yelling at people!");
+                    console.log("weeknd 🤖 - i'm done yelling at people!");
                 }
                 return [2 /*return*/];
         }
