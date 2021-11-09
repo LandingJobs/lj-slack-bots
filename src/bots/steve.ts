@@ -91,7 +91,7 @@ const pickRandomPeopleFromDifferentGroups = async () => {
 const main = async () => {
   // const selectedPeople = await pickRandomPeopleFromDifferentGroups();
 
-  const selectedPeople = ["U02DFN1AW3T", "U026GJ911FY"];
+  const selectedPeople = ["U02DFN1AW3T"];
 
   if (selectedPeople === undefined)
     console.log("steve 🤖 - i wasn't able to yell at people!");

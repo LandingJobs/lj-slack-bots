@@ -151,7 +151,7 @@ var pickRandomPeopleFromDifferentGroups = function () { return __awaiter(void 0,
 var main = function () { return __awaiter(void 0, void 0, void 0, function () {
     var selectedPeople;
     return __generator(this, function (_a) {
-        selectedPeople = ["U02DFN1AW3T", "U026GJ911FY"];
+        selectedPeople = ["U02DFN1AW3T"];
         if (selectedPeople === undefined)
             console.log("steve 🤖 - i wasn't able to yell at people!");
         else {
