@@ -12,7 +12,7 @@ declare module "@slack/web-api/dist/response/UsergroupsListResponse" {
 export const cronTimer = "0 12 * * 1"; // every monday at 12am
 export const jobId = "steve";
 
-const client = new WebClient(process.env.SLACK_API_TOKEN);
+const client = new WebClient(process.env.STEVE_API_TOKEN);
 
 const sendGroupMessage = async (users: string[]) => {
   try {

@@ -45,7 +45,7 @@ var pickRandom_1 = __importDefault(require("../lib/pickRandom"));
 var isUserOnVacation_1 = __importDefault(require("../lib/isUserOnVacation"));
 exports.cronTimer = "0 11 * * 1"; // every monday at 11am
 exports.jobId = "weeknd";
-var client = new web_api_1.WebClient(process.env.SLACK_API_TOKEN);
+var client = new web_api_1.WebClient(process.env.WEEKND_API_TOKEN);
 var sendMessage = function (user) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, ok, error, error_1;
     var _b, _c;

@@ -8,7 +8,7 @@ import isUserOnVacation from "../lib/isUserOnVacation";
 export const cronTimer = "0 11 * * 1"; // every monday at 11am
 export const jobId = "weeknd";
 
-const client = new WebClient(process.env.SLACK_API_TOKEN);
+const client = new WebClient(process.env.WEEKND_API_TOKEN);
 
 const sendMessage = async (user: Member | User) => {
   try {
