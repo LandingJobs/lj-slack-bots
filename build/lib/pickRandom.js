@@ -1,10 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var pickRandom = function (arr, count) {
-    if (count === void 0) { count = 3; }
-    var picked = [];
+const pickRandom = (arr, count = 3) => {
+    const picked = [];
     while (picked.length < count) {
-        var item = arr[Math.floor(Math.random() * arr.length)];
+        const item = arr[Math.floor(Math.random() * arr.length)];
         if (picked.includes(item))
             continue;
         else

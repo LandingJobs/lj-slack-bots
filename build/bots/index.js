@@ -19,9 +19,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var steve_1 = __importStar(require("./steve"));
-var weeknd_1 = __importStar(require("./weeknd"));
-var bots = [
+const steve_1 = __importStar(require("./steve"));
+const weeknd_1 = __importStar(require("./weeknd"));
+const bots = [
     {
         botName: "weekndBot",
         bot: weeknd_1.default,

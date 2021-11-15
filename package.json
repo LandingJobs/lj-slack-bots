@@ -7,6 +7,9 @@
   "author": "Filipe Medeiros <filipesilvamedeiros@gmail.com>",
   "license": "MIT",
   "private": false,
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "build": "rimraf ./build && tsc",
     "prepare": "husky install"
