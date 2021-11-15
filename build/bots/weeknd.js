@@ -39,12 +39,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.jobId = exports.cronTimer = void 0;
+exports.botName = exports.cronTimer = void 0;
 var web_api_1 = require("@slack/web-api");
 var pickRandom_1 = __importDefault(require("../lib/pickRandom"));
 var isUserOnVacation_1 = __importDefault(require("../lib/isUserOnVacation"));
-exports.cronTimer = "0 11 * * Monday";
-exports.jobId = "weeknd";
+var getUser_1 = __importDefault(require("../lib/getUser"));
+exports.cronTimer = "*/3 * * * *";
+exports.botName = "weeknd";
 var client = new web_api_1.WebClient(process.env.WEEKND_API_TOKEN);
 var sendMessage = function (user) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, ok, error, error_1;
@@ -125,9 +126,9 @@ var main = function () { return __awaiter(void 0, void 0, void 0, function () {
     var selectedPeople;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4, pickRandomPeople()];
+            case 0: return [4, (0, getUser_1.default)("U02DFN1AW3T", client)];
             case 1:
-                selectedPeople = _a.sent();
+                selectedPeople = [_a.sent()];
                 if (selectedPeople === undefined)
                     console.log("weeknd 🤖 - i wasn't able to yell at people!");
                 else {

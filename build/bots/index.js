@@ -23,15 +23,15 @@ var steve_1 = __importStar(require("./steve"));
 var weeknd_1 = __importStar(require("./weeknd"));
 var bots = [
     {
-        botId: "weekndBot",
+        botName: "weekndBot",
         bot: weeknd_1.default,
-        jobId: weeknd_1.jobId,
+        jobId: weeknd_1.botName,
         cronTimer: weeknd_1.cronTimer,
     },
     {
-        botId: "randomConvoBot",
+        botName: "randomConvoBot",
         bot: steve_1.default,
-        jobId: steve_1.jobId,
+        jobId: steve_1.botName,
         cronTimer: steve_1.cronTimer,
     },
 ];

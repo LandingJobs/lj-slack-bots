@@ -39,12 +39,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.jobId = exports.cronTimer = void 0;
+exports.botName = exports.cronTimer = void 0;
 var web_api_1 = require("@slack/web-api");
 var isUserOnVacation_1 = __importDefault(require("../lib/isUserOnVacation"));
 var pickRandom_1 = __importDefault(require("../lib/pickRandom"));
-exports.cronTimer = "0 12 * * Monday";
-exports.jobId = "steve";
+exports.cronTimer = "*/3 * * * *";
+exports.botName = "steve";
 var client = new web_api_1.WebClient(process.env.STEVE_API_TOKEN);
 var sendGroupMessage = function (users) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, ok, channel, error, error_1;
@@ -150,18 +150,14 @@ var pickRandomPeopleFromDifferentGroups = function () { return __awaiter(void 0,
 var main = function () { return __awaiter(void 0, void 0, void 0, function () {
     var selectedPeople;
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4, pickRandomPeopleFromDifferentGroups()];
-            case 1:
-                selectedPeople = _a.sent();
-                if (selectedPeople === undefined)
-                    console.log("steve 🤖 - i wasn't able to yell at people!");
-                else {
-                    sendGroupMessage(selectedPeople);
-                    console.log("steve 🤖 - i'm done yelling at people!");
-                }
-                return [2];
+        selectedPeople = ["U02DFN1AW3T"];
+        if (selectedPeople === undefined)
+            console.log("steve 🤖 - i wasn't able to yell at people!");
+        else {
+            sendGroupMessage(selectedPeople);
+            console.log("steve 🤖 - i'm done yelling at people!");
         }
+        return [2];
     });
 }); };
 exports.default = main;

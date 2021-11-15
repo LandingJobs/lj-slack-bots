@@ -1,21 +1,21 @@
 import randomConvoBot, {
   cronTimer as randomConvoCronTimer,
-  jobId as randomConvoJobId,
+  botName as randomConvoJobId,
 } from "./steve";
 import weekndBot, {
   cronTimer as weekndCronTimer,
-  jobId as weekndJobId,
+  botName as weekndJobId,
 } from "./weeknd";
 
 const bots = [
   {
-    botId: "weekndBot",
+    botName: "weekndBot",
     bot: weekndBot,
     jobId: weekndJobId,
     cronTimer: weekndCronTimer,
   },
   {
-    botId: "randomConvoBot",
+    botName: "randomConvoBot",
     bot: randomConvoBot,
     jobId: randomConvoJobId,
     cronTimer: randomConvoCronTimer,

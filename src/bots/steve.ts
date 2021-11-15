@@ -9,9 +9,9 @@ declare module "@slack/web-api/dist/response/UsergroupsListResponse" {
   }
 }
 
-export const cronTimer = "0 12 * * Monday"; // every monday at 12am
-// export const cronTimer = "*/3 * * * *"; // testing
-export const jobId = "steve";
+// export const cronTimer = "0 12 * * Monday"; // every monday at 12am
+export const cronTimer = "*/3 * * * *"; // testing
+export const botName = "steve";
 
 const client = new WebClient(process.env.STEVE_API_TOKEN);
 
@@ -88,9 +88,9 @@ const pickRandomPeopleFromDifferentGroups = async () => {
 };
 
 const main = async () => {
-  const selectedPeople = await pickRandomPeopleFromDifferentGroups();
+  // const selectedPeople = await pickRandomPeopleFromDifferentGroups();
 
-  // const selectedPeople = ["U02DFN1AW3T"]; // testing
+  const selectedPeople = ["U02DFN1AW3T"]; // testing
 
   if (selectedPeople === undefined)
     console.log("steve 🤖 - i wasn't able to yell at people!");

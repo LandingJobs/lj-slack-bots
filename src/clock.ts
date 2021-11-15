@@ -1,12 +1,16 @@
 import { schedule } from "node-cron";
-import Queue from "bull";
+import { Queue } from "bullmq";
 
 import bots from "./bots";
+import { connection } from "./redis";
 
-const REDIS_URL = process.env.REDIS_URL || "redis://127.0.0.1:6379";
+const scheduleBots = () => {
+  const workQueue = new Queue("bots", { connection });
+  workQueue.drain();
 
-const workQueue = new Queue("bots", REDIS_URL);
+  bots.forEach(({ cronTimer, botName }) =>
+    workQueue.add(botName, {}, { repeat: { cron: cronTimer } })
+  );
+};
 
-bots.forEach(({ cronTimer, jobId }) => {
-  schedule(cronTimer, () => workQueue.add({ bot: jobId }));
-});
+scheduleBots();
