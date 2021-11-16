@@ -3,13 +3,11 @@ import IORedis from "ioredis";
 const redisUrl = process.env.REDIS_URL;
 const host = redisUrl?.split("@")[1].split(":")[0];
 const port = Number(redisUrl?.split(":")[redisUrl?.split(":").length - 1]);
-const username = redisUrl?.split(":")[2].split("@")[0];
-const password = username;
+const password = redisUrl?.split(":")[2].split("@")[0];
 
 export const config = {
   host,
   port,
-  username,
   password,
 };
 
