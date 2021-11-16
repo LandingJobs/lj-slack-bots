@@ -11,4 +11,4 @@ function start() {
   );
 }
 
-start();
+// start();
