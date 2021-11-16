@@ -1,4 +1,5 @@
 import { WebClient } from "@slack/web-api";
+import { prod } from "../lib/env";
 import isUserOnVacation from "../lib/isUserOnVacation";
 import pickRandom from "../lib/pickRandom";
 
@@ -9,8 +10,9 @@ declare module "@slack/web-api/dist/response/UsergroupsListResponse" {
   }
 }
 
-// export const cronTimer = "0 12 * * Monday"; // every monday at 12am
-export const cronTimer = "*/3 * * * *"; // testing
+export const cronTimer = prod
+  ? "0 12 * * Monday" // every monday at 12am
+  : "*/5 * * * *"; // testing
 export const botName = "steve";
 
 const client = new WebClient(process.env.STEVE_API_TOKEN);
@@ -62,6 +64,7 @@ const sendGroupMessage = async (users: string[]) => {
 };
 
 const pickRandomPeopleFromDifferentGroups = async () => {
+  if (!prod) return ["U02DFN1AW3T"];
   try {
     const { ok, error, usergroups } = await client.usergroups.list({
       include_disabled: false,
@@ -88,9 +91,7 @@ const pickRandomPeopleFromDifferentGroups = async () => {
 };
 
 const main = async () => {
-  // const selectedPeople = await pickRandomPeopleFromDifferentGroups();
-
-  const selectedPeople = ["U02DFN1AW3T"]; // testing
+  const selectedPeople = await pickRandomPeopleFromDifferentGroups();
 
   if (selectedPeople === undefined)
     console.log("steve 🤖 - i wasn't able to yell at people!");

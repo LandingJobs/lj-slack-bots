@@ -17,7 +17,10 @@ const web_api_1 = require("@slack/web-api");
 const pickRandom_1 = __importDefault(require("../lib/pickRandom"));
 const isUserOnVacation_1 = __importDefault(require("../lib/isUserOnVacation"));
 const getUser_1 = __importDefault(require("../lib/getUser"));
-exports.cronTimer = "*/3 * * * *";
+const env_1 = require("../lib/env");
+exports.cronTimer = env_1.prod
+    ? "0 11 * * Monday"
+    : "*/5 * * * *";
 exports.botName = "weeknd";
 const client = new web_api_1.WebClient(process.env.WEEKND_API_TOKEN);
 const sendMessage = (user) => __awaiter(void 0, void 0, void 0, function* () {
@@ -59,6 +62,8 @@ const sendMessage = (user) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 const pickRandomPeople = () => __awaiter(void 0, void 0, void 0, function* () {
+    if (!env_1.prod)
+        return [(yield (0, getUser_1.default)("U02DFN1AW3T", client))];
     try {
         const { ok, members, error } = yield client.users.list();
         if (!ok)
@@ -74,13 +79,11 @@ const pickRandomPeople = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    const selectedPeople = [yield (0, getUser_1.default)("U02DFN1AW3T", client)];
+    const selectedPeople = yield pickRandomPeople();
     if (selectedPeople === undefined)
         console.log("weeknd 🤖 - i wasn't able to yell at people!");
     else {
-        selectedPeople
-            .filter((user) => user !== undefined)
-            .forEach((user) => sendMessage(user));
+        selectedPeople.forEach((user) => sendMessage(user));
         console.log("weeknd 🤖 - i'm done yelling at people!");
     }
 });

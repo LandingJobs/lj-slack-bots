@@ -4,15 +4,21 @@ import type { User } from "@slack/web-api/dist/response/UsersInfoResponse";
 
 import pickRandom from "../lib/pickRandom";
 import isUserOnVacation from "../lib/isUserOnVacation";
-import getUser from "../lib/getUser"; // testing
+import getUser from "../lib/getUser";
+import { prod } from "../lib/env";
 
-// export const cronTimer = "0 11 * * Monday"; // every monday at 11am
-export const cronTimer = "*/3 * * * *"; // testing
+export const cronTimer = prod
+  ? "0 11 * * Monday" // every monday at 11am
+  : "*/5 * * * *"; // testing
 export const botName = "weeknd";
 
 const client = new WebClient(process.env.WEEKND_API_TOKEN);
 
-const sendMessage = async (user: Member | User) => {
+const sendMessage = async (user: {
+  id?: string;
+  real_name?: string;
+  name?: string;
+}) => {
   try {
     const { ok, error } = await client.chat.postMessage({
       blocks: [
@@ -54,6 +60,8 @@ const sendMessage = async (user: Member | User) => {
 };
 
 const pickRandomPeople = async () => {
+  if (!prod) return [(await getUser("U02DFN1AW3T", client))!];
+
   try {
     const { ok, members, error } = await client.users.list();
     if (!ok) throw error;
@@ -75,16 +83,12 @@ const pickRandomPeople = async () => {
 };
 
 const main = async () => {
-  // const selectedPeople = await pickRandomPeople();
-
-  const selectedPeople = [await getUser("U02DFN1AW3T", client)]; // testing
+  const selectedPeople = await pickRandomPeople();
 
   if (selectedPeople === undefined)
     console.log("weeknd 🤖 - i wasn't able to yell at people!");
   else {
-    selectedPeople
-      .filter((user) => user !== undefined)
-      .forEach((user) => sendMessage(user!));
+    selectedPeople.forEach((user) => sendMessage(user));
     console.log("weeknd 🤖 - i'm done yelling at people!");
   }
 };

@@ -14,9 +14,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.botName = exports.cronTimer = void 0;
 const web_api_1 = require("@slack/web-api");
+const env_1 = require("../lib/env");
 const isUserOnVacation_1 = __importDefault(require("../lib/isUserOnVacation"));
 const pickRandom_1 = __importDefault(require("../lib/pickRandom"));
-exports.cronTimer = "*/3 * * * *";
+exports.cronTimer = env_1.prod
+    ? "0 12 * * Monday"
+    : "*/5 * * * *";
 exports.botName = "steve";
 const client = new web_api_1.WebClient(process.env.STEVE_API_TOKEN);
 const sendGroupMessage = (users) => __awaiter(void 0, void 0, void 0, function* () {
@@ -62,6 +65,8 @@ const sendGroupMessage = (users) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 const pickRandomPeopleFromDifferentGroups = () => __awaiter(void 0, void 0, void 0, function* () {
+    if (!env_1.prod)
+        return ["U02DFN1AW3T"];
     try {
         const { ok, error, usergroups } = yield client.usergroups.list({
             include_disabled: false,
@@ -86,7 +91,7 @@ const pickRandomPeopleFromDifferentGroups = () => __awaiter(void 0, void 0, void
     }
 });
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    const selectedPeople = ["U02DFN1AW3T"];
+    const selectedPeople = yield pickRandomPeopleFromDifferentGroups();
     if (selectedPeople === undefined)
         console.log("steve 🤖 - i wasn't able to yell at people!");
     else {
