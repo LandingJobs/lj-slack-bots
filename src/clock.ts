@@ -1,4 +1,5 @@
 import { Queue } from "bullmq";
+import { schedule } from "node-cron";
 
 import bots from "./bots";
 import connection from "./redis";
@@ -10,7 +11,7 @@ const scheduleBots = () => {
 
   bots.forEach(({ cronTimer, jobName, botName }) => {
     console.log(`scheduling bot ${botName} to run on cron ${cronTimer}`);
-    workQueue.add(jobName, {}, { repeat: { cron: cronTimer } });
+    schedule(cronTimer, () => workQueue.add(jobName, {}));
   });
 };
 
