@@ -11,4 +11,5 @@ const redisUrl = (_a = process.env.REDIS_URL) !== null && _a !== void 0 ? _a : l
 exports.connection = new ioredis_1.default(redisUrl, {
     maxRetriesPerRequest: null,
     enableReadyCheck: false,
+    retryStrategy: (times) => (times < 10 ? times : null),
 });
