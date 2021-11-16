@@ -8,11 +8,9 @@ exports.connection = void 0;
 const ioredis_1 = __importDefault(require("ioredis"));
 const localRedisUrl = "redis://127.0.0.1:6379";
 const redisUrl = (_a = process.env.REDIS_URL) !== null && _a !== void 0 ? _a : localRedisUrl;
-const host = redisUrl === null || redisUrl === void 0 ? void 0 : redisUrl.slice(0, redisUrl.lastIndexOf(":"));
 const port = Number(redisUrl === null || redisUrl === void 0 ? void 0 : redisUrl.slice(redisUrl.lastIndexOf(":") + 1));
-console.log("LOGGING", host, port);
 exports.connection = new ioredis_1.default({
-    host,
+    host: redisUrl,
     port,
     maxRetriesPerRequest: null,
     enableReadyCheck: false,
