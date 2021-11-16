@@ -1,14 +1,13 @@
 import IORedis from "ioredis";
 
 const localRedisUrl = "redis://127.0.0.1:6379";
-const redisUrl =
-  process.env.REDIS_URL?.slice(0, process.env.REDIS_URL.lastIndexOf(":")) ||
-  localRedisUrl;
-console.log(redisUrl);
-const splitByColon = redisUrl.split(":");
-const port = Number(splitByColon[splitByColon.length - 1]);
+const redisUrl = process.env.REDIS_URL ?? localRedisUrl;
+const host = redisUrl?.slice(0, redisUrl.lastIndexOf(":"));
+const port = Number(redisUrl?.slice(redisUrl.lastIndexOf(":") + 1));
 
 export const connection = new IORedis({
-  host: redisUrl,
+  host,
   port,
+  maxRetriesPerRequest: null,
+  enableReadyCheck: false,
 });
