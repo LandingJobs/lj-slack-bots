@@ -5,6 +5,8 @@ const redisUrl = process.env.REDIS_URL ?? localRedisUrl;
 const host = redisUrl?.slice(0, redisUrl.lastIndexOf(":"));
 const port = Number(redisUrl?.slice(redisUrl.lastIndexOf(":") + 1));
 
+console.log(host, port);
+
 export const connection = new IORedis({
   host,
   port,
