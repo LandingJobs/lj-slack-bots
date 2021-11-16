@@ -10,9 +10,9 @@ function start() {
       console.log(`running job ${job.name} (id: ${job.id})`);
       bots.find(({ jobName }) => jobName === job.name)?.bot();
     },
-    { connection }
+    { connection: connection() }
   );
   worker.on("error", console.error);
 }
 
-// start();
+start();

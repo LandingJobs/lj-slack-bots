@@ -7,7 +7,7 @@ const bullmq_1 = require("bullmq");
 const bots_1 = __importDefault(require("./bots"));
 const redis_1 = __importDefault(require("./redis"));
 const scheduleBots = () => {
-    const workQueue = new bullmq_1.Queue("bots", { connection: redis_1.default });
+    const workQueue = new bullmq_1.Queue("bots", { connection: (0, redis_1.default)() });
     console.log("draining the existing queue");
     workQueue.drain();
     bots_1.default.forEach(({ cronTimer, jobName, botName }) => {
@@ -15,3 +15,4 @@ const scheduleBots = () => {
         workQueue.add(jobName, {}, { repeat: { cron: cronTimer } });
     });
 };
+scheduleBots();

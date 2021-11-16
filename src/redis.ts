@@ -13,10 +13,11 @@ export const config = {
 
 console.log("redis config", { host: config.host, port: config.port });
 
-const connection = new IORedis({
-  ...config,
-  maxRetriesPerRequest: null,
-  enableReadyCheck: false,
-});
+const connection = () =>
+  new IORedis({
+    ...config,
+    maxRetriesPerRequest: null,
+    enableReadyCheck: false,
+  });
 
 export default connection;

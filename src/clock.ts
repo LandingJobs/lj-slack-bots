@@ -4,7 +4,7 @@ import bots from "./bots";
 import connection from "./redis";
 
 const scheduleBots = () => {
-  const workQueue = new Queue("bots", { connection });
+  const workQueue = new Queue("bots", { connection: connection() });
   console.log("draining the existing queue");
   workQueue.drain();
 
@@ -14,4 +14,4 @@ const scheduleBots = () => {
   });
 };
 
-// scheduleBots();
+scheduleBots();

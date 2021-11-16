@@ -20,6 +20,7 @@ function start() {
         var _a;
         console.log(`running job ${job.name} (id: ${job.id})`);
         (_a = bots_1.default.find(({ jobName }) => jobName === job.name)) === null || _a === void 0 ? void 0 : _a.bot();
-    }), { connection: redis_1.default });
+    }), { connection: (0, redis_1.default)() });
     worker.on("error", console.error);
 }
+start();
