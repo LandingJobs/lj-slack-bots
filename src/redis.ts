@@ -1,17 +1,9 @@
 import IORedis from "ioredis";
 
-const host = process.env.REDIS_HOST;
-const port = Number(process.env.REDIS_PORT);
-const username = process.env.REDIS_USERNAME;
-const password = process.env.REDIS_PASSWORD;
+const localRedisUrl = "redis://127.0.0.1:6379";
+const redisUrl = process.env.REDIS_URL ?? localRedisUrl;
 
-console.log(`connecting to redis on host ${host} and port ${port}`);
-
-export const connection = new IORedis({
-  host,
-  port,
+export const connection = new IORedis(redisUrl, {
   maxRetriesPerRequest: null,
   enableReadyCheck: false,
-  username,
-  password,
 });
