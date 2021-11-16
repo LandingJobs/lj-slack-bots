@@ -8,9 +8,9 @@ const scheduleBots = () => {
   console.log("draining the existing queue");
   workQueue.drain();
 
-  bots.forEach(({ cronTimer, botName }) => {
+  bots.forEach(({ cronTimer, jobName, botName }) => {
     console.log(`scheduling bot ${botName} to run on cron ${cronTimer}`);
-    workQueue.add(botName, {}, { repeat: { cron: cronTimer } });
+    workQueue.add(jobName, {}, { repeat: { cron: cronTimer } });
   });
 };
 
