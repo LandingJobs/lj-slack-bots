@@ -1,4 +1,3 @@
-import { schedule } from "node-cron";
 import { Queue } from "bullmq";
 
 import bots from "./bots";
