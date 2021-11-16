@@ -16,8 +16,7 @@ export const config = {
 console.log(config);
 
 const connection = new IORedis({
-  host: redisUrl,
-  port,
+  ...config,
   maxRetriesPerRequest: null,
   enableReadyCheck: false,
 });

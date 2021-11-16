@@ -17,10 +17,5 @@ exports.config = {
     password,
 };
 console.log(exports.config);
-const connection = new ioredis_1.default({
-    host: redisUrl,
-    port,
-    maxRetriesPerRequest: null,
-    enableReadyCheck: false,
-});
+const connection = new ioredis_1.default(Object.assign(Object.assign({}, exports.config), { maxRetriesPerRequest: null, enableReadyCheck: false }));
 exports.default = connection;
