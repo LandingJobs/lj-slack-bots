@@ -39,7 +39,7 @@ const sendMessage = (user) => __awaiter(void 0, void 0, void 0, function* () {
                     type: "section",
                     text: {
                         type: "mrkdwn",
-                        text: "You've been chosen to share _\"voluntarily\"_ some pictures 📷 of your super fun weekend.\nIf you're weekend wasn't fun, get some stock pictures from Google 🤪",
+                        text: "You've been chosen to _\"voluntarily\"_ share some pictures 📷 of your super fun weekend.\nIf you're weekend wasn't fun, get some stock pictures from Google 🤪",
                     },
                 },
                 {
