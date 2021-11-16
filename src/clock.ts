@@ -1,10 +1,10 @@
 import { Queue } from "bullmq";
 
 import bots from "./bots";
-import { connection } from "./redis";
+import redisConfig from "./redis";
 
 const scheduleBots = () => {
-  const workQueue = new Queue("bots", { connection });
+  const workQueue = new Queue("bots", { connection: redisConfig });
   workQueue.drain();
 
   bots.forEach(({ cronTimer, botName }) =>

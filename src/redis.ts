@@ -1,10 +1,23 @@
-import IORedis from "ioredis";
+const redisUrl = process.env.REDIS_URL;
+const host = redisUrl?.split("@")[1].split(":")[0];
+const port = Number(redisUrl?.split(":")[redisUrl?.split(":").length - 1]);
+const username = redisUrl?.split(":")[2].split("@")[0];
+const password = username;
 
-const localRedisUrl = "redis://127.0.0.1:6379";
-const redisUrl = process.env.REDIS_URL ?? localRedisUrl;
+const config = {
+  host,
+  port,
+  username,
+  password,
+};
 
-export const connection = new IORedis(redisUrl, {
-  maxRetriesPerRequest: null,
-  enableReadyCheck: false,
-  retryStrategy: (times) => (times < 10 ? times : null),
-});
+console.log(config);
+
+export default config;
+
+// export const connection = new IORedis({
+//   host: redisUrl,
+//   port,
+//   maxRetriesPerRequest: null,
+//   enableReadyCheck: false,
+// });
