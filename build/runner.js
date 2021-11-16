@@ -23,4 +23,3 @@ function start() {
     }), { connection: redis_1.default });
     worker.on("error", console.error);
 }
-start();

@@ -15,4 +15,4 @@ function start() {
   worker.on("error", console.error);
 }
 
-start();
+// start();

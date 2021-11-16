@@ -15,4 +15,3 @@ const scheduleBots = () => {
         workQueue.add(jobName, {}, { repeat: { cron: cronTimer } });
     });
 };
-scheduleBots();
