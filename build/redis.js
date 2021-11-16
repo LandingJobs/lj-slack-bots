@@ -14,6 +14,6 @@ exports.config = {
     port,
     password,
 };
-console.log(exports.config);
+console.log("redis config", { host: exports.config.host, port: exports.config.port });
 const connection = new ioredis_1.default(Object.assign(Object.assign({}, exports.config), { maxRetriesPerRequest: null, enableReadyCheck: false }));
 exports.default = connection;

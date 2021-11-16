@@ -11,7 +11,7 @@ export const config = {
   password,
 };
 
-console.log(config);
+console.log("redis config", { host: config.host, port: config.port });
 
 const connection = new IORedis({
   ...config,

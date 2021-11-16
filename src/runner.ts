@@ -6,7 +6,7 @@ import connection from "./redis";
 function start() {
   new Worker(
     "bots",
-    async (job) => bots.find(({ jobId }) => jobId === job.data.bot)?.bot(),
+    async (job) => bots.find(({ jobName }) => jobName === job.name)?.bot(),
     { connection }
   );
 }

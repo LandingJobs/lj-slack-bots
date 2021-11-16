@@ -11,13 +11,13 @@ const bots = [
   {
     botName: "weekndBot",
     bot: weekndBot,
-    jobId: weekndJobId,
+    jobName: weekndJobId,
     cronTimer: weekndCronTimer,
   },
   {
     botName: "randomConvoBot",
     bot: randomConvoBot,
-    jobId: randomConvoJobId,
+    jobName: randomConvoJobId,
     cronTimer: randomConvoCronTimer,
   },
 ];
