@@ -18,3 +18,4 @@ const redis_1 = __importDefault(require("./redis"));
 function start() {
     new bullmq_1.Worker("bots", (job) => __awaiter(this, void 0, void 0, function* () { var _a; return (_a = bots_1.default.find(({ jobId }) => jobId === job.data.bot)) === null || _a === void 0 ? void 0 : _a.bot(); }), { connection: redis_1.default });
 }
+start();

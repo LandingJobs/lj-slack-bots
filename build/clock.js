@@ -11,3 +11,4 @@ const scheduleBots = () => {
     workQueue.drain();
     bots_1.default.forEach(({ cronTimer, botName }) => workQueue.add(botName, {}, { repeat: { cron: cronTimer } }));
 };
+scheduleBots();
