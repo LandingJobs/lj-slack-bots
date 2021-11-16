@@ -12,6 +12,7 @@ function start() {
     },
     { connection: connection() }
   );
+  console.log("worker", worker);
   worker.on("error", console.error);
 }
 
