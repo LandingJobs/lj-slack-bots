@@ -4,7 +4,7 @@ import bots from "./bots";
 import connection from "./redis";
 
 function start() {
-  new Worker(
+  const worker = new Worker(
     "bots",
     async (job) => {
       console.log(`running job ${job.name} (id: ${job.id})`);
@@ -12,6 +12,7 @@ function start() {
     },
     { connection }
   );
+  worker.on("error", console.error);
 }
 
 start();
